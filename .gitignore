@@ -184,3 +184,7 @@ src/main/resources/
 src/test/
 target/
 /.idea/
+/.idea/compiler.xml
+/.idea/encodings.xml
+/.idea/misc.xml
+/.idea/modules.xml
