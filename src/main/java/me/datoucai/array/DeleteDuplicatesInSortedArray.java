@@ -6,29 +6,38 @@ package me.datoucai.array;
  */
 public class DeleteDuplicatesInSortedArray {
     public static void main(String[] args) {
-        int[] ints = {0, 0, 1, 1, 2, 4, 4, 5, 9};
-        int index = sort(ints);
+        int[] nums = {1, 2, 2, 3};
+        int index = sort(nums);
         System.out.println(index);
     }
 
-    private static int sort(int[] ints) {
-        if (ints.length < 2) {
-            return ints.length;
+    private static int sort(int[] nums) {
+        int flag = 0;
+        if (nums.length < 2) {
+            return nums.length;
+        }
+        if (nums[0] < nums[1]) {
+            flag++;
         }
 
         int index = 1;
-        int indexNum = ints[index];
-        for (int i = index + 1; i < ints.length; i++) {
-            if (ints[i] > indexNum) {
-                ints[index] = ints[i];
-                indexNum = ints[index];
+        int indexNum = nums[index];
+        for (int i = index + 1; i < nums.length; i++) {
+            if (nums[i] > indexNum) {
+                //出现相同时候才换位置
+                if (nums[index] <= nums[index - 1]) {
+                    nums[index] = nums[i];
+                }
+                indexNum = nums[index];
                 i = ++index;
             }
-            if (i == ints.length) {
+            if (i == nums.length) {
                 return index;
             }
         }
-
+        if (index < 3) {
+            index = index + flag;
+        }
         return index;
     }
 

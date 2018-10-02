@@ -7,13 +7,23 @@ package me.datoucai.array;
 public class SearchInsert {
     public static void main(String[] args) {
         int[] nums = {1, 3, 6, 7, 9};
-        System.out.println(searchInsert(nums, 1));
-        System.out.println(nums);
+        System.out.println(searchInsert(nums, 6));
     }
 
     public static int searchInsert(int[] nums, int target) {
-        int index = nums.length / 2;
+        int left = 0;
+        int right = nums.length - 1;
 
-        return 0;
+        while (left <= right)  //循环条件，适时而变
+        {
+            int middle = left + ((right - left) >> 1);  //防止溢出，移位也更高效。同时，每次循环都需要更新。
+            if (nums[middle] > target)
+                right = middle - 1;  //right赋值，适时而变
+            else if (nums[middle] < target)
+                left = middle + 1;
+            else
+                return middle;
+        }
+        return left;
     }
 }
