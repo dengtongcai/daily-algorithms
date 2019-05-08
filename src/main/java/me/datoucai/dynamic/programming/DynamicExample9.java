@@ -5,17 +5,16 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.HashMap;
 
 /**
- * 爬楼梯[简单]
- * https://leetcode-cn.com/problems/climbing-stairs/
- * 有一座高度是10级台阶的楼梯，从下往上走，每跨一步只能向上1级或者2级台阶。要求用程序来求出一共有多少种走法。
- * <p>
- * 比如，每次走1级台阶，一共走10步，这是其中一种走法。我们可以简写成 1,1,1,1,1,1,1,1,1,1。
+ * 挖矿最大收益计算
+ * 有一个国家发现了5座金矿，每座金矿的黄金储量不同，需要参与挖掘的工人数也不同。
+ * 参与挖矿工人的总数是10人。每座金矿要么全挖，要么不挖，不能派出一半人挖取一半金矿。
+ * 要求用程序求解出，要想得到尽可能多的黄金，应该选择挖取哪几座金矿？
  *
  * @author cc
  * @date 2019/5/8
  */
 @Slf4j
-public class DynamicExample1 {
+public class DynamicExample9 {
     public static void main(String[] args) {
         HashMap cache = new HashMap<Integer, Integer>();
         log.info("递归解法:{}", recursivePlan(15));
@@ -33,15 +32,8 @@ public class DynamicExample1 {
      * @return
      */
     private static int recursivePlan(int step) {
-        if (step == 1) {
-            return 1;
-        }
-        if (step == 2) {
-            return 2;
-        }
-        if (step < 1) {
-            return 0;
-        }
+
+
         return recursivePlan(step - 1) + recursivePlan(step - 2);
     }
 
