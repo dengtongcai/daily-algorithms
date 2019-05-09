@@ -1,0 +1,135 @@
+<!-- Configuration的status，取值"trace", "debug", "info", "warn", "error", "fatal"，设置log4j2自身内部信息输出，当设为trace时，会输出log4j2内部详细信息 -->
+<!-- monitorInterval="1800" 每隔1800秒扫描该配置文件是否有变化，如有变化重新加载，最短时间间隔为5秒 -->
+<configuration status="off" monitorInterval="1800">
+    <properties>
+        <!--日志级别 -->
+        <property name="LOG_ROOT_LEVEL" value="INFO"/>
+        <!--日志内容编码 -->
+        <property name="LOG_CHARSET" value="UTF-8"/>
+        <!-- 日志格式 -->
+        <property name="LOG_PATTERN"
+                  value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level
+			%c{36} [%line] - %msg%n"/>
+        <!--日志路径 -->
+        <property name="LOG_PATH" value="./logs"/>
+        <!--日志文件大小 -->
+        <property name="MAX_FILE_SIZE" value="1000MB"/>
+    </properties>
+
+    <appenders>
+        <!--控制台,ConsoleAppender输出结果到System.out/System.err -->
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <ThresholdFilter level="${LOG_ROOT_LEVEL}"
+                             onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout charset="${LOG_CHARSET}"
+                           pattern="${LOG_PATTERN}"/>
+        </Console>
+
+        <!-- INFO 日志文件 -->
+        <RollingRandomAccessFile name="ALL_LOG"
+                                 fileName="${LOG_PATH}/all.log"
+                                 filePattern="${LOG_PATH}/all-%d{yyyyMMdd-HHmmss.SSS}.log">
+            <PatternLayout charset="${LOG_CHARSET}"
+                           pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <!--当日志大小达到1000MB时，以上述filePattern定义的格式进行打包压缩 -->
+                <SizeBasedTriggeringPolicy
+                        size="${MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/><!--压缩包数量不超过20 -->
+        </RollingRandomAccessFile>
+
+        <!-- SYSOUT 日志文件 -->
+        <RollingRandomAccessFile name="ERROR_LOG"
+                                 fileName="${LOG_PATH}/error.log"
+                                 filePattern="${LOG_PATH}/error-%d{yyyyMMdd-HHmmss.SSS}.log">
+            <PatternLayout charset="${LOG_CHARSET}"
+                           pattern="${LOG_PATTERN}"/>
+            <ThresholdFilter level="error" onMatch="ACCEPT"
+                             onMismatch="DENY"/>
+            <Policies>
+                <!--当日志大小达到1000MB时，以上述filePattern定义的格式进行打包压缩 -->
+                <SizeBasedTriggeringPolicy
+                        size="${MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/><!--压缩包数量不超过20 -->
+        </RollingRandomAccessFile>
+        <!-- ARMS 日志文件 -->
+        <RollingRandomAccessFile name="ARMS_LOG"
+                                 fileName="${LOG_PATH}/arms.log"
+                                 filePattern="${LOG_PATH}/arms-%d{yyyyMMdd-HHmmss.SSS}.log">
+            <PatternLayout charset="${LOG_CHARSET}"
+                           pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <!--当日志大小达到1000MB时，以上述filePattern定义的格式进行打包压缩 -->
+                <SizeBasedTriggeringPolicy
+                        size="${MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/><!--压缩包数量不超过20 -->
+        </RollingRandomAccessFile>
+        <!-- Console 日志文件 -->
+        <RollingRandomAccessFile name="CONSOLE_LOG"
+                                 fileName="${LOG_PATH}/stdout.log"
+                                 filePattern="${LOG_PATH}/stdout-%d{yyyyMMdd-HHmmss.SSS}.log">
+            <PatternLayout charset="${LOG_CHARSET}"
+                           pattern="${LOG_PATTERN}"/>
+            <ThresholdFilter level="${LOG_ROOT_LEVEL}"
+                             onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <!--当日志大小达到1000MB时，以上述filePattern定义的格式进行打包压缩 -->
+                <SizeBasedTriggeringPolicy
+                        size="${MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/><!--压缩包数量不超过20 -->
+        </RollingRandomAccessFile>
+
+        <!-- 异步输出文件 -->
+        <Async name="ASYNC_ALL_LOG" bufferSize="262144">
+            <AppenderRef ref="ALL_LOG"/>
+        </Async>
+        <Async name="ASYNC_ERROR_LOG" bufferSize="262144">
+            <AppenderRef ref="ERROR_LOG"/>
+        </Async>
+        <Async name="ASYNC_CONSOLE_LOG" bufferSize="262144">
+            <AppenderRef ref="CONSOLE_LOG"/>
+        </Async>
+        <Async name="ASYNC_ARMS_LOG" bufferSize="262144">
+            <AppenderRef ref="ARMS_LOG"/>
+        </Async>
+    </appenders>
+    <loggers>
+        <root level="${LOG_ROOT_LEVEL}">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+        <Logger name="ALL" level="INFO" additivity="false">
+            <AppenderRef ref="ASYNC_ALL_LOG"/>
+        </Logger>
+        <Logger name="ERROR" level="ERROR" additivity="false">
+            <AppenderRef ref="ASYNC_ERROR_LOG"/>
+        </Logger>
+        <Logger name="ASYNC_LOG_RRAF_BIZA" level="INFO" additivity="false">
+            <AppenderRef ref="ASYNC_ALL_LOG"/>
+        </Logger>
+        <Logger name="com.jfbank" level="INFO" additivity="false">
+            <AppenderRef ref="ASYNC_ALL_LOG"/>
+        </Logger>
+        <Logger name="ARMS" level="INFO" additivity="false">
+            <AppenderRef ref="ASYNC_ARMS_LOG"/>
+        </Logger>
+        <logger name="org.mybatis" level="ERROR"/>
+        <logger name="com.ibatis" level="ERROR"/>
+        <logger name="java.sql.Connection" level="ERROR"/>
+        <logger name="java.sql.Statement" level="ERROR"/>
+        <logger name="java.sql.PreparedStatement" level="ERROR"/>
+        <logger name="java.sql.ResultSet" level="ERROR"/>
+        <logger
+                name="org.apache.commons.httpclient.util.IdleConnectionHandler"
+                level="ERROR"/>
+        <logger
+                name="org.apache.activemq.transport.AbstractInactivityMonitor"
+                level="INFO"/>
+        <logger name="org.apache.zookeeper" level="ERROR"/>
+        <logger name="com.alibaba.rocketmq" level="ERROR"/>
+    </loggers>
+
+</configuration>

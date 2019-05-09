@@ -1,4 +1,4 @@
-package me.datoucai.array;
+package me.datoucai.structure.array;
 
 /**
  * 从排序数组中删除重复项

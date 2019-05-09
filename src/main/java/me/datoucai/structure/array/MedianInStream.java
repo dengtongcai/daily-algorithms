@@ -1,4 +1,4 @@
-package me.datoucai.array;
+package me.datoucai.structure.array;
 
 import java.util.ArrayList;
 import java.util.List;
