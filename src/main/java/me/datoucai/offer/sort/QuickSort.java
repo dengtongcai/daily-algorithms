@@ -1,4 +1,4 @@
-package me.datoucai.array;
+package me.datoucai.offer.sort;
 
 public class QuickSort {
 
