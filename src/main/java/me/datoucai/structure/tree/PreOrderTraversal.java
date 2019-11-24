@@ -17,15 +17,14 @@ public class PreOrderTraversal {
         LinkedList<Integer> integers = new LinkedList<>();
         Stack stack = new Stack<TreeNode>();
         TreeNode now = root;
-        stack.push(now);
-        while (!stack.isEmpty()) {
-            now = (TreeNode) stack.pop();
-            integers.addLast(now.val);
-            if(now.right!=null){
-                stack.push(now.right);
-            }
-            if(now.left!=null){
-                stack.push(now.left);
+        while (now != null || !stack.isEmpty()) {
+            if (now != null) {
+                integers.addLast(now.val);
+                stack.push(now);
+                now = now.left;
+            } else {
+                TreeNode node = (TreeNode) stack.pop();
+                now = node.right;
             }
         }
         return integers;

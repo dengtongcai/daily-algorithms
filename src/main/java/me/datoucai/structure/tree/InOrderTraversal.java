@@ -17,8 +17,8 @@ public class InOrderTraversal {
                 stack.push(now);
                 now = now.left;
             } else {
-                now = stack.pop();
                 integers.addLast(now.val);
+                now = stack.pop();
                 now = now.right;
             }
         }

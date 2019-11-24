@@ -27,7 +27,7 @@ public class QuickSort {
         if (startIdx < endIdx) {
             pivot = partition(A, startIdx, endIdx); //将待排序数组一分为二，返回枢轴值pivot
 
-            quickSort(A, startIdx, pivot - 1); //对于弟子表递归排序
+            quickSort(A, startIdx, pivot - 1); //对于低子表递归排序
             quickSort(A, pivot + 1, endIdx);  //对高子表递归排序
         }
     }
