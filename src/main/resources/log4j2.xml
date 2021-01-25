@@ -1,5 +1,5 @@
 <!-- Configuration的status，取值"trace", "debug", "info", "warn", "error", "fatal"，设置log4j2自身内部信息输出，当设为trace时，会输出log4j2内部详细信息 -->
-<!-- monitorInterval="1800" 每隔1800秒扫描该配置文件是否有变化，如有变化重新加载，最短时间间隔为5秒 -->
+<!-- monitorInterval="1800" 每隔1800秒扫描该配置文件是否有变化，如有变化重新加载，最短时间间隔为5秒  -->
 <configuration status="off" monitorInterval="1800">
     <properties>
         <!--日志级别 -->
