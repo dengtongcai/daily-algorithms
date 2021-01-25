@@ -11,5 +11,5 @@ gen
 logs/
 src/main/java/me/datoucai/structure/tree/
 target/
-/logs/
+/logs/*
 !/daily-algorithms.iml
